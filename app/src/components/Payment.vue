@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { ref, reactive, watch, toRefs } from "vue";
+import {
+  ref,
+  reactive,
+  watch,
+  toRefs,
+  onMounted,
+  onBeforeMount,
+  onUpdated,
+} from "vue";
 
 const item1 = reactive({
   name: "Desk",
@@ -36,6 +44,18 @@ const clear = () => {
   item1.name = "";
   item1.price = 0;
 };
+
+onBeforeMount(() => {
+  console.log("onBeforeMount");
+});
+
+onMounted(() => {
+  console.log("onMounted");
+});
+
+onUpdated(() => {
+  console.log("updated");
+});
 </script>
 
 <template>
