@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
-
-type Tweet = {
-  id: string;
-  description: string;
-};
+import { Tweet } from "@/types/tweet";
+import TweetCompoent from "./Tweet.vue";
 
 const tweets = ref<Array<Tweet>>([
   { id: "1", description: "Hello!" },
@@ -27,9 +24,9 @@ const onSubmit = () => {
   tweet.value = { id: "", description: "" };
 };
 
-const onDelete = (id: string) => {
-  tweets.value = tweets.value.filter((tweet) => tweet.id !== id);
-};
+// const onDelete = (id: string) => {
+//   tweets.value = tweets.value.filter((tweet) => tweet.id !== id);
+// };
 
 /** 検索テキスト */
 const search = ref<string>("");
@@ -37,23 +34,65 @@ const search = ref<string>("");
 
 <template>
   <h1>Twitter</h1>
-  <form @submit.prevent="onSubmit">
-    <input type="text" v-model="tweet.description" />
+
+  <form class="tweet-form" @submit.prevent="onSubmit">
+    <textarea v-model="tweet.description"></textarea>
     <button type="submit">Tweet</button>
   </form>
-  <input type="text" v-model="search" />
 
-  <ul>
+  <ul class="tweets">
     <li v-for="(tweet, key) in tweets" :key="key">
-      <div v-if="tweet.description.includes(search)">
-        <span>{{ tweet.description }} </span>
-        <button @click="() => onDelete(tweet.id)">Delete</button>
-      </div>
+      <TweetCompoent :tweet="tweet" />
     </li>
   </ul>
 </template>
 
 <style scoped>
+.tweet-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  textarea {
+    width: 400px;
+    height: 100px;
+    border-radius: 4px;
+  }
+
+  button {
+    width: 100px;
+    height: 50px;
+  }
+
+  justify-content: center;
+  align-items: center;
+}
+
+.tweets {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 400px;
+}
+
+.tweet {
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    background-color: #ff0000;
+    color: #fff;
+    border-radius: 4px;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+}
+
 ul {
   list-style: none;
   padding: 0;
