@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive } from "vue";
 
-// const itemName1 = ref<string>("Desk");
 const itemName2 = ref<string>("Bike");
 
 const item1 = reactive({
@@ -19,23 +18,6 @@ const buy = (itemName: string) => {
 };
 
 /**
- * Input item name
- *
- * @param event Event
- */
-const input = (event: Event) => {
-  console.log((event.target as HTMLInputElement).value);
-  item1.name = (event.target as HTMLInputElement).value;
-};
-
-/**
- * Input price
- */
-const inputPrice = (event: Event) => {
-  item1.price = parseInt((event.target as HTMLInputElement).value);
-};
-
-/**
  * Clear input
  */
 const clear = () => {
@@ -47,8 +29,8 @@ const clear = () => {
 <template>
   <div class="container">
     <h1>Payment</h1>
-    <input type="text" v-on:input="input" v-bind:value="item1.name" />
-    <input type="text" v-on:input="inputPrice" v-bind:value="item1.price" />
+    <input type="text" v-model="item1.name" />
+    <input type="text" v-model="item1.price" />
     <button v-on:click="clear">Clear</button>
     <div class="payment">
       <label>{{ item1.name }}</label>
