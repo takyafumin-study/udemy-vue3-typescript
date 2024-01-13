@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const itemName1 = ref("Desk");
+const itemName1 = "Desk";
 const itemName2 = "Bike";
 
 const price1 = 40000;
@@ -12,8 +12,8 @@ const buy = (itemName: string) => {
   alert("Aer you sure to buy " + itemName + "?");
 };
 
-const input = (event: any) => {
-  console.log(event.target.value);
+const input = (event: Event) => {
+  console.log((event.target as HTMLButtonElement).value);
 };
 </script>
 
