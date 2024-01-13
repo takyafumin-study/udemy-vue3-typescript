@@ -1,38 +1,65 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 
-defineProps<{ msg: string }>()
+type Tweet = {
+  id: string;
+  description: string;
+};
 
-const count = ref(0)
+const tweets = ref<Array<Tweet>>([
+  { id: "1", description: "Hello!" },
+  { id: "2", description: "Example" },
+]);
+const tweet = ref<Tweet>({ id: "", description: "" });
+
+/**
+ * submit
+ */
+const onSubmit = () => {
+  tweets.value = [
+    ...tweets.value,
+    {
+      id: Math.random().toString(),
+      description: tweet.value.description,
+    },
+  ];
+
+  tweet.value = { id: "", description: "" };
+};
+
+const onDelete = (id: string) => {
+  tweets.value = tweets.value.filter((tweet) => tweet.id !== id);
+};
+
+/** 検索テキスト */
+const search = ref<string>("");
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
+  <h1>Twitter</h1>
+  <form @submit.prevent="onSubmit">
+    <input type="text" v-model="tweet.description" />
+    <button type="submit">Tweet</button>
+  </form>
+  <input type="text" v-model="search" />
 
-  <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
-    <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
-    </p>
-  </div>
-
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Install
-    <a href="https://github.com/vuejs/language-tools" target="_blank">Volar</a>
-    in your IDE for a better DX
-  </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+  <ul>
+    <li v-for="(tweet, key) in tweets" :key="key">
+      <div v-if="tweet.description.includes(search)">
+        <span>{{ tweet.description }} </span>
+        <button @click="() => onDelete(tweet.id)">Delete</button>
+      </div>
+    </li>
+  </ul>
 </template>
 
 <style scoped>
-.read-the-docs {
-  color: #888;
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-top: 1rem;
 }
 </style>
