@@ -2,44 +2,39 @@
 import { ref } from "vue";
 import { Tweet } from "@/types/tweet";
 import TweetCompoent from "./Tweet.vue";
+import TweetFormComponent from "./TweetForm.vue";
 
+/**
+ * tweets
+ */
 const tweets = ref<Array<Tweet>>([
   { id: "1", description: "Hello!" },
   { id: "2", description: "Example" },
 ]);
-const tweet = ref<Tweet>({ id: "", description: "" });
 
 /**
- * submit
+ * onSubmit
+ *
+ * @param description
  */
-const onSubmit = () => {
+const onSubmit = (description: string) => {
   tweets.value = [
     ...tweets.value,
     {
       id: Math.random().toString(),
-      description: tweet.value.description,
+      description,
     },
   ];
-
-  tweet.value = { id: "", description: "" };
 };
 
 // const onDelete = (id: string) => {
 //   tweets.value = tweets.value.filter((tweet) => tweet.id !== id);
 // };
-
-/** 検索テキスト */
-const search = ref<string>("");
 </script>
 
 <template>
   <h1>Twitter</h1>
-
-  <form class="tweet-form" @submit.prevent="onSubmit">
-    <textarea v-model="tweet.description"></textarea>
-    <button type="submit">Tweet</button>
-  </form>
-
+  <TweetFormComponent @submit="onSubmit" />
   <ul class="tweets">
     <li v-for="(tweet, key) in tweets" :key="key">
       <TweetCompoent :tweet="tweet" />
