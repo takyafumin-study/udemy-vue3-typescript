@@ -7,8 +7,8 @@ type Tweet = {
 };
 
 const tweets = ref<Array<Tweet>>([
-  { id: "1", description: "Hello World" },
-  { id: "2", description: "Hello World2" },
+  { id: "1", description: "Hello!" },
+  { id: "2", description: "Example" },
 ]);
 const tweet = ref<Tweet>({ id: "", description: "" });
 
@@ -30,6 +30,9 @@ const onSubmit = () => {
 const onDelete = (id: string) => {
   tweets.value = tweets.value.filter((tweet) => tweet.id !== id);
 };
+
+/** 検索テキスト */
+const search = ref<string>("");
 </script>
 
 <template>
@@ -38,9 +41,11 @@ const onDelete = (id: string) => {
     <input type="text" v-model="tweet.description" />
     <button type="submit">Tweet</button>
   </form>
+  <input type="text" v-model="search" />
+
   <ul>
     <li v-for="(tweet, key) in tweets" :key="key">
-      <div>
+      <div v-if="tweet.description.includes(search)">
         <span>{{ tweet.description }} </span>
         <button @click="() => onDelete(tweet.id)">Delete</button>
       </div>
