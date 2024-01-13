@@ -9,7 +9,6 @@ const item1 = reactive({
   price: 40000,
 });
 
-// const price1 = 40000;
 const price2 = 20000;
 
 const url1 = "https://www.amazon.co.jp/dp/B07CMTX1VB";
@@ -19,21 +18,38 @@ const buy = (itemName: string) => {
   alert("Aer you sure to buy " + itemName + "?");
 };
 
+/**
+ * Input item name
+ *
+ * @param event Event
+ */
 const input = (event: Event) => {
   console.log((event.target as HTMLInputElement).value);
   item1.name = (event.target as HTMLInputElement).value;
 };
 
+/**
+ * Input price
+ */
 const inputPrice = (event: Event) => {
   item1.price = parseInt((event.target as HTMLInputElement).value);
+};
+
+/**
+ * Clear input
+ */
+const clear = () => {
+  item1.name = "";
+  item1.price = 0;
 };
 </script>
 
 <template>
   <div class="container">
     <h1>Payment</h1>
-    <input type="text" v-on:input="input" />
-    <input type="text" v-on:input="inputPrice" />
+    <input type="text" v-on:input="input" v-bind:value="item1.name" />
+    <input type="text" v-on:input="inputPrice" v-bind:value="item1.price" />
+    <button v-on:click="clear">Clear</button>
     <div class="payment">
       <label>{{ item1.name }}</label>
       <label>{{ item1.price }}円</label>
