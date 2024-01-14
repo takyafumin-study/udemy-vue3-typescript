@@ -1,5 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Persons from './components/Persons.vue'
+</script>
 
-<template>App Vue</template>
+<template>
+  <Persons />
+</template>
 
 <style scoped></style>
