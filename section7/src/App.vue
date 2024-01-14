@@ -6,4 +6,8 @@ import Persons from './components/Persons.vue'
   <Persons />
 </template>
 
-<style scoped></style>
+<style scoped>
+#app {
+  text-align: center;
+}
+</style>

@@ -15,4 +15,10 @@ import PersonList from './PersonList.vue'
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+</style>
