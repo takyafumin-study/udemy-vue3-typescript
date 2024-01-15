@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, provide, readonly } from "vue";
 import { Tweet } from "@/types/tweet";
 import TweetFormComponent from "./TweetForm.vue";
 import TweetList from "./TweetList.vue";
@@ -33,10 +33,16 @@ const onDelete = (id: string) => {
 const isOpenModal = ref<boolean>(false);
 const userName = ref<string>("");
 
-const closeUserModal = (username: string) => {
-  userName.value = username;
+const closeUserModal = () => {
   isOpenModal.value = false;
 };
+
+const username = ref("");
+const updateUserName = (value: string) => {
+  username.value = value;
+};
+provide("username", readonly(username));
+provide("updateUserName", updateUserName);
 </script>
 
 <template>
@@ -45,7 +51,7 @@ const closeUserModal = (username: string) => {
     {{ userName }}
   </div>
   <teleport to="body">
-    <UserModal :show="isOpenModal" :username="userName" @close="closeUserModal" />
+    <UserModal :show="isOpenModal" @close="closeUserModal" />
   </teleport>
   <h1>Twitter</h1>
   <TweetFormComponent @submit="onSubmit" />

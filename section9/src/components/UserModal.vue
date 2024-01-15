@@ -1,12 +1,26 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, inject } from "vue";
 
 const props = defineProps({
   show: Boolean,
-  username: String,
 });
 
-const username = ref<string>(props.username);
+const emits = defineEmits<{
+  (e: "close"): void;
+}>();
+
+const username = inject<string>("username", "");
+const currentUsername = ref<string>(username);
+
+const updateUserName = inject<(value: string) => void>(
+  "updateUserName",
+  () => { },
+);
+
+const onClose = () => {
+  updateUserName(currentUsername.value);
+  emits("close");
+};
 </script>
 
 <template>
@@ -18,15 +32,13 @@ const username = ref<string>(props.username);
 
       <div class="modal-body">
         <slot name="body">
-          <input type="text" v-model="username" />
+          <input type="text" v-model="currentUsername" />
         </slot>
       </div>
 
       <div class="modal-footer">
         <slot name="footer">
-          <button class="modal-default-button" @click="$emit('close', username)">
-            OK
-          </button>
+          <button class="modal-default-button" @click="onClose">OK</button>
         </slot>
       </div>
     </div>
