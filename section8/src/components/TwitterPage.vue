@@ -44,7 +44,9 @@ const closeUserModal = (username: string) => {
     <button @click="isOpenModal = !isOpenModal">Settings</button>
     {{ userName }}
   </div>
-  <UserModal :show="isOpenModal" :username="userName" @close="closeUserModal" />
+  <teleport to="body">
+    <UserModal :show="isOpenModal" :username="userName" @close="closeUserModal" />
+  </teleport>
   <h1>Twitter</h1>
   <TweetFormComponent @submit="onSubmit" />
   <TweetList :tweets="tweets" @delete="onDelete" />
