@@ -1,6 +1,37 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue";
 
-<template></template>
+const props = defineProps({
+  show: Boolean,
+  username: String,
+});
+
+const username = ref<string>(props.username);
+</script>
+
+<template>
+  <div v-if="props.show" class="modal-mask">
+    <div class="modal-container">
+      <div class="modal-header">
+        <slot name="header">Fill Username</slot>
+      </div>
+
+      <div class="modal-body">
+        <slot name="body">
+          <input type="text" v-model="username" />
+        </slot>
+      </div>
+
+      <div class="modal-footer">
+        <slot name="footer">
+          <button class="modal-default-button" @click="$emit('close', username)">
+            OK
+          </button>
+        </slot>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style>
 .modal-mask {
