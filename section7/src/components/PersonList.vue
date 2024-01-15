@@ -18,7 +18,7 @@ const onDelete = (id: number) => {
 <template>
   <li v-for="person in persons" :key="person.id" class="person-list">
     <span>{{ person.name }}</span>
-    <span>{{ person.age }}</span>
+    <span>age: {{ person.age }}</span>
     <button @click="() => onDelete(person.id)">
       <span>delete</span>
     </button>
