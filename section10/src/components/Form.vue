@@ -1,11 +1,25 @@
 <script setup lang="ts">
+import { ref } from "vue";
+
+const userName = ref<string>("");
+
+/**
+ * v-focus directive
+ *
+ * @param {Event} event
+ */
+const vFocus = {
+  mounted: (el: HTMLElement) => {
+    el.focus();
+  },
+};
 </script>
 
 <template>
   <form>
     <div class="form-control">
       <label for="user-name">Your Name</label>
-      <input id="user-name" name="user-name" type="text" />
+      <input id="user-name" name="user-name" type="text" v-focus />
     </div>
     <div class="form-control">
       <label for="age">Your Age</label>
@@ -97,8 +111,8 @@ input[type="radio"] {
   margin-right: 1rem;
 }
 
-input[type="checkbox"] + label,
-input[type="radio"] + label {
+input[type="checkbox"]+label,
+input[type="radio"]+label {
   font-weight: normal;
 }
 
