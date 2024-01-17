@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, inject } from "vue";
+import { userNameKey, updateUserNameKey } from "@/key";
 
 const props = defineProps({
   show: Boolean,
@@ -9,11 +10,11 @@ const emits = defineEmits<{
   (e: "close"): void;
 }>();
 
-const username = inject<string>("username", "");
+const username = inject<string>(userNameKey, "");
 const currentUsername = ref<string>(username);
 
 const updateUserName = inject<(value: string) => void>(
-  "updateUserName",
+  updateUserNameKey,
   () => { },
 );
 

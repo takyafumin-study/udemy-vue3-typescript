@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { inject } from "vue";
+import { userNameKey } from "@/key";
 
 const emits = defineEmits<{
   (e: "submit"): void;
@@ -9,8 +10,7 @@ const onSubmit = () => {
   emits("submit");
 };
 
-// const userName = "John Doe";
-const userName = inject<string>("username");
+const userName = inject<string>(userNameKey, "");
 </script>
 
 <template>

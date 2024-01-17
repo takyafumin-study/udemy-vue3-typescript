@@ -4,6 +4,7 @@ import { Tweet } from "@/types/tweet";
 import TweetFormComponent from "./TweetForm.vue";
 import TweetList from "./TweetList.vue";
 import UserModal from "./UserModal.vue";
+import { userNameKey, updateUserNameKey } from "@/key";
 
 const tweets = ref<Tweet[]>([
   {
@@ -41,8 +42,8 @@ const username = ref("");
 const updateUserName = (value: string) => {
   username.value = value;
 };
-provide("username", readonly(username));
-provide("updateUserName", updateUserName);
+provide(userNameKey, readonly(username));
+provide(updateUserNameKey, updateUserName);
 </script>
 
 <template>
