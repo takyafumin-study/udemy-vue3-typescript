@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { DirectiveBinding, ref, watch } from "vue";
+import Rating from "@/components/Rating.vue";
 
 const userName = ref<string>("");
 const from = ref<string>("japan");
@@ -11,6 +12,10 @@ watch(interest, () => {
 const radios = ref<Array<boolean>>([]);
 watch(radios, () => {
   console.log("radios: ", radios.value);
+});
+const ratings = ref<string>("");
+watch(ratings, () => {
+  console.log("ratings(at Form.vue): ", ratings.value);
 });
 
 /**
@@ -41,13 +46,7 @@ const onSubmit = () => {
   <form>
     <div class="form-control">
       <label for="user-name">Your Name</label>
-      <input
-        v-model="userName"
-        id="user-name"
-        name="user-name"
-        type="text"
-        v-focus.alert
-      />
+      <input v-model="userName" id="user-name" name="user-name" type="text" v-focus.alert />
     </div>
     <div class="form-control">
       <label for="age">Your Age</label>
@@ -64,67 +63,34 @@ const onSubmit = () => {
     <div class="form-control">
       <h2>What are you interested in?</h2>
       <div>
-        <input
-          id="interest-react"
-          name="interest"
-          type="checkbox"
-          value="react"
-          v-model="interest"
-        />
+        <input id="interest-react" name="interest" type="checkbox" value="react" v-model="interest" />
         <label for="interest-react">React.js</label>
       </div>
       <div>
-        <input
-          id="interest-vue"
-          name="interest"
-          type="checkbox"
-          value="vue"
-          v-model="interest"
-        />
+        <input id="interest-vue" name="interest" type="checkbox" value="vue" v-model="interest" />
         <label for="interest-vue">Vue.js</label>
       </div>
       <div>
-        <input
-          id="interest-angular"
-          name="interest"
-          type="checkbox"
-          value="angular"
-          v-model="interest"
-        />
+        <input id="interest-angular" name="interest" type="checkbox" value="angular" v-model="interest" />
         <label for="interest-angular">Angular.js</label>
       </div>
     </div>
     <div class="form-control">
       <h2>How do you learn?</h2>
       <div>
-        <input
-          id="how-video"
-          name="how"
-          type="radio"
-          value="video"
-          v-model="radios"
-        />
+        <input id="how-video" name="how" type="radio" value="video" v-model="radios" />
         <label for="how-video">Video Courses</label>
       </div>
       <div>
-        <input
-          id="how-books"
-          name="how"
-          type="radio"
-          value="books"
-          v-model="radios"
-        />
+        <input id="how-books" name="how" type="radio" value="books" v-model="radios" />
         <label for="how-books">Books</label>
       </div>
       <div>
-        <input
-          id="how-other"
-          name="how"
-          type="radio"
-          value="other"
-          v-model="radios"
-        />
+        <input id="how-other" name="how" type="radio" value="other" v-model="radios" />
         <label for="how-other">Other</label>
+      </div>
+      <div>
+        <rating v-model="ratings" />
       </div>
     </div>
     <div>
@@ -175,8 +141,8 @@ input[type="radio"] {
   margin-right: 1rem;
 }
 
-input[type="checkbox"] + label,
-input[type="radio"] + label {
+input[type="checkbox"]+label,
+input[type="radio"]+label {
   font-weight: normal;
 }
 
