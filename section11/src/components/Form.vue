@@ -12,12 +12,24 @@ const userName = ref<string>("");
 const interest = ref([]);
 const data = ref();
 const isLoading = ref<boolean>(false);
+const error = ref<Error | null>(null);
 
 onMounted(async () => {
   isLoading.value = true;
-  data.value = await axios.get(
-    "https://udemy-vue3-typescript-default-rtdb.firebaseio.com/surveys.json",
-  );
+
+  try {
+    const response = await axios.get(
+      "https://udemy-vue3-typescript-default-rtdb.firebaseio.com/surveys.json",
+    );
+    if (response.status !== 200) {
+      throw new Error("エラーが発生しました");
+    }
+
+    data.value = response;
+  } catch (e: unknown) {
+    error.value = e as Error;
+  }
+
   isLoading.value = false;
   console.log("data is", data);
 });
@@ -70,6 +82,7 @@ const onSubmit = () => {
     </div>
     <div v-if="isLoading">Loading...</div>
     <div v-else>{{ data }}</div>
+    <div v-if="error">{{ error }}</div>
     <div>
       <button @click.prevent="onSubmit">Save Data</button>
     </div>
