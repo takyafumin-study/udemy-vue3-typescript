@@ -10,11 +10,15 @@ const vFocus = {
 
 const userName = ref<string>("");
 const interest = ref([]);
+const data = ref();
+const isLoading = ref<boolean>(false);
 
 onMounted(async () => {
-  const data = await axios.get(
+  isLoading.value = true;
+  data.value = await axios.get(
     "https://udemy-vue3-typescript-default-rtdb.firebaseio.com/surveys.json",
   );
+  isLoading.value = false;
   console.log("data is", data);
 });
 
@@ -64,6 +68,8 @@ const onSubmit = () => {
         <label for="interest-angular">Angular.js</label>
       </div>
     </div>
+    <div v-if="isLoading">Loading...</div>
+    <div v-else>{{ data }}</div>
     <div>
       <button @click.prevent="onSubmit">Save Data</button>
     </div>
