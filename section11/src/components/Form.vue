@@ -10,7 +10,20 @@ const vFocus = {
 const userName = ref<string>("");
 const interest = ref([]);
 
-const onSubmit = (e: Event) => {
+const onSubmit = () => {
+  fetch(
+    "https://udemy-vue3-typescript-default-rtdb.firebaseio.com/surveys.json",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: userName.value,
+        interest: interest.value,
+      }),
+    },
+  );
   interest.value = [];
 };
 </script>
